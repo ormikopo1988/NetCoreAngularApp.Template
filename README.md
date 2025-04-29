@@ -1,3 +1,6 @@
+[![Build](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/build.yml/badge.svg)](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/build.yml)
+[![CodeQL](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/codeql.yml/badge.svg)](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/codeql.yml)
+[![Azure Deployment](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/azure-dev.yml/badge.svg)](https://github.com/ormikopo1988/NetCoreAngularApp.Template/actions/workflows/azure-dev.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ormikopo1988_NetCoreAngularApp.Template&metric=alert_status&token=6306c5cf3f711bfaf03d114ba50463a61cbf8622)](https://sonarcloud.io/summary/new_code?id=ormikopo1988_NetCoreAngularApp.Template)
 
 # NetCoreAngularApp.Template
