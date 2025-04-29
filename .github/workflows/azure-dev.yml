@@ -134,6 +134,9 @@ jobs:
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
 
       - name: Run EF migrations
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+        if: ${{ env.DB_CONNECTION_STRING != '' }}
         run: |
           unzip -o ./efbundle/efbundle.zip
           echo '{ "ConnectionStrings": { "DefaultConnection": "${{ secrets.DB_CONNECTION_STRING }}" } }' > appsettings.json
