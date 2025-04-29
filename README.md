@@ -266,3 +266,28 @@ In the terminal window, view the results of the `azd pipeline config` command.
 Using your browser, open the GitHub repository for your project.
 
 Select Actions to see the workflow running.
+
+For the azure-dev.yml workflow to run successfully and run the preflight validations and what-if commands,
+you need to setup the following secrets inside your GitHub repository:
+
+* `AZURE_SQL_ADMINISTRATOR_PASSWORD`
+* `AZURE_SQL_USER_PASSWORD`
+* `DB_CONNECTION_STRING`
+* `SNYK_TOKEN`
+* `SONAR_TOKEN`
+
+The `SNYK_TOKEN` and `SONAR_TOKEN` tokens can be generated from the [Snyk](https://app.snyk.io/account) and [SonarCloud](https://sonarcloud.io/account/security) websites respectively.
+
+The `AZURE_SQL_ADMINISTRATOR_PASSWORD` & `AZURE_SQL_USER_PASSWORD` are the passwords for the Postgresql Server administrator and user accounts respectively.
+
+The `DB_CONNECTION_STRING` is the connection string to the Postgresql database.
+
+## Resources
+
+- https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment
+- https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment-github-actions
+- https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/configure-devops-pipeline
+- https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/application-insights
+- https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/dotnet-environments/overview/
+- https://docs.sonarsource.com/sonarqube-cloud/advanced-setup/ci-based-analysis/azure-pipelines/adding-analysis-to-build-pipeline/dotnet-project/
+- https://github.com/snyk/actions/tree/master/dotnet
