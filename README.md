@@ -280,7 +280,7 @@ The `SNYK_TOKEN` and `SONAR_TOKEN` tokens can be generated from the [Snyk](https
 
 The `AZURE_SQL_ADMINISTRATOR_PASSWORD` & `AZURE_SQL_USER_PASSWORD` are the passwords for the Postgresql Server administrator and user accounts respectively.
 
-The `DB_CONNECTION_STRING` is the connection string to the Postgresql database.
+The `DB_CONNECTION_STRING` is the connection string to the Postgresql database (e.g., `Server={hostname}.postgres.database.azure.com;Port=5432;Database={dbName};Username={dbUsername};Password={dbPassword}`).
 
 ## Resources
 
