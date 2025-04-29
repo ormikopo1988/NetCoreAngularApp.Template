@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\azure-dev.yml = .github\workflows\azure-dev.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CA426B12-934E-4B65-A1E7-CF0FD74F3056}"

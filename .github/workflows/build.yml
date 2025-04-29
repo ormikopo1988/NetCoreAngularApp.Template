@@ -6,9 +6,10 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'README.md'
-      - '.dockerignore'
-      - '.gitignore'
+      - .gitignore
+      - .dockerignore 
+      - LICENSE
+      - README.md
   workflow_call:
     inputs:
       build-artifacts:
