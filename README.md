@@ -159,6 +159,8 @@ dotnet sonarscanner end /d:sonar.token="{yourSonarToken}"
 
 ## Provisioning Infrastructure and Deploying the App using Azure Developer CLI (azd)
 
+### From your local machine
+
 The steps in this section demonstrate how to handle 
 provisioning of the necessary infrastructure and deploying of the app to Azure using `azd`:
 
@@ -218,3 +220,39 @@ be used to spin down the environment using the following command:
 ```
 azd down --force --purge
 ```
+
+### Configure a pipeline and push updates
+
+You can also setup the Azure Developer CLI (azd) to push template changes through a CI/CD pipeline such as GitHub Actions or Azure DevOps.
+
+azd templates may or may not include a default GitHub Actions and/or Azure DevOps pipeline configuration file called `azure-dev.yml`, which is required to setup CI/CD. 
+
+This configuration file provisions your Azure resources and deploy your code to the main branch. 
+
+You can find `azure-dev.yml`:
+
+* For GitHub Actions: in the `.github/workflows` directory.
+* For Azure DevOps: in the `.azuredevops/pipelines` directory or the `.azdo/pipelines` directory.
+
+You can use the configuration file as-is or modify it to suit your needs.
+
+> Make sure your template has a pipeline definition (`azure-dev.yaml`) before calling `azd pipeline config`, as azd does not automatically create this file.
+
+Use the `azd pipeline config` command to configure a CI/CD pipeline, which handles the following tasks:
+
+* Creates and configures a service principal for the app on the Azure subscription. Your user must have either Owner role or Contributor + User Access Administrator roles within the Azure subscription to allow azd to create and assign roles to the service principal.
+* Steps you through a workflow to create and configure a GitHub or Azure DevOps repository and commit your project code to it. You can also choose to use an existing repository.
+* Creates a secure connection between Azure and your repository.
+* Runs the GitHub action when you check in the workflow file.
+
+#### Authorize GitHub to deploy to Azure
+
+To configure the workflow, you need to authorize a service principal to deploy to Azure on your behalf, from a GitHub action. azd creates the service principal and a federated credential for it.
+
+Run the following command to create the Azure service principal and configure the pipeline:
+
+```
+azd pipeline config
+```
+
+> By default, azd pipeline config uses OpenID Connect (OIDC), called federated credentials. If you'd rather not use OIDC, run `azd pipeline config --auth-type client-credentials`.
