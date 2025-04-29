@@ -1,0 +1,135 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Api", "src\NetCoreAngularApp.Template.Api\NetCoreAngularApp.Template.Api.csproj", "{B8E555CF-22B4-485B-812C-A2EB3FFEC46D}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "NetCoreAngularApp.Template.Client", "src\NetCoreAngularApp.Template.Client\NetCoreAngularApp.Template.Client.esproj", "{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DC3D2AA-D4DF-4FB7-A3E1-28187811BC43}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.ServiceDefaults", "src\NetCoreAngularApp.Template.ServiceDefaults\NetCoreAngularApp.Template.ServiceDefaults.csproj", "{4862C7C0-CC16-40A5-AD79-122190DC9B5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.AppHost", "src\NetCoreAngularApp.Template.AppHost\NetCoreAngularApp.Template.AppHost.csproj", "{7DED39D6-3796-428F-853A-082835FC0FA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B0B72D38-3642-4655-9C63-2FB6158BBF75}"
+	ProjectSection(SolutionItems) = preProject
+		.github\pull_request_template.md = .github\pull_request_template.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B578699-F95C-4A33-A3D3-FA15A193C961}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\azure-dev.yml = .github\workflows\azure-dev.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CA426B12-934E-4B65-A1E7-CF0FD74F3056}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{1EFFBDB5-EA7E-4BAC-8A6F-25625E68EA33}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\config.yml = .github\ISSUE_TEMPLATE\config.yml
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Persistence", "src\NetCoreAngularApp.Template.Persistence\NetCoreAngularApp.Template.Persistence.csproj", "{583E8A66-6925-4FCC-B56A-8235EC07F575}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Migrations", "src\NetCoreAngularApp.Template.Migrations\NetCoreAngularApp.Template.Migrations.csproj", "{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Domain", "src\NetCoreAngularApp.Template.Domain\NetCoreAngularApp.Template.Domain.csproj", "{C079CA75-865E-4DE4-A40D-6243DFEC2560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Application", "src\NetCoreAngularApp.Template.Application\NetCoreAngularApp.Template.Application.csproj", "{AB256CFB-96E8-4744-9026-BEE4D8F50811}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Infrastructure", "src\NetCoreAngularApp.Template.Infrastructure\NetCoreAngularApp.Template.Infrastructure.csproj", "{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Application.Tests.Integration", "tests\NetCoreAngularApp.Template.Application.Tests.Integration\NetCoreAngularApp.Template.Application.Tests.Integration.csproj", "{C7BBC48B-E520-4924-8A13-AD037605A0E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8E555CF-22B4-485B-812C-A2EB3FFEC46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E555CF-22B4-485B-812C-A2EB3FFEC46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E555CF-22B4-485B-812C-A2EB3FFEC46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E555CF-22B4-485B-812C-A2EB3FFEC46D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4862C7C0-CC16-40A5-AD79-122190DC9B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4862C7C0-CC16-40A5-AD79-122190DC9B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4862C7C0-CC16-40A5-AD79-122190DC9B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4862C7C0-CC16-40A5-AD79-122190DC9B5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DED39D6-3796-428F-853A-082835FC0FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DED39D6-3796-428F-853A-082835FC0FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DED39D6-3796-428F-853A-082835FC0FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DED39D6-3796-428F-853A-082835FC0FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA426B12-934E-4B65-A1E7-CF0FD74F3056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA426B12-934E-4B65-A1E7-CF0FD74F3056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA426B12-934E-4B65-A1E7-CF0FD74F3056}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA426B12-934E-4B65-A1E7-CF0FD74F3056}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{583E8A66-6925-4FCC-B56A-8235EC07F575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{583E8A66-6925-4FCC-B56A-8235EC07F575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{583E8A66-6925-4FCC-B56A-8235EC07F575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{583E8A66-6925-4FCC-B56A-8235EC07F575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C079CA75-865E-4DE4-A40D-6243DFEC2560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C079CA75-865E-4DE4-A40D-6243DFEC2560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C079CA75-865E-4DE4-A40D-6243DFEC2560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C079CA75-865E-4DE4-A40D-6243DFEC2560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB256CFB-96E8-4744-9026-BEE4D8F50811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB256CFB-96E8-4744-9026-BEE4D8F50811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB256CFB-96E8-4744-9026-BEE4D8F50811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB256CFB-96E8-4744-9026-BEE4D8F50811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7BBC48B-E520-4924-8A13-AD037605A0E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7BBC48B-E520-4924-8A13-AD037605A0E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7BBC48B-E520-4924-8A13-AD037605A0E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7BBC48B-E520-4924-8A13-AD037605A0E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8E555CF-22B4-485B-812C-A2EB3FFEC46D} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{9D7B1DE1-ECF4-43D6-81A8-704569B067EA} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{4862C7C0-CC16-40A5-AD79-122190DC9B5A} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{7DED39D6-3796-428F-853A-082835FC0FA5} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{1B578699-F95C-4A33-A3D3-FA15A193C961} = {B0B72D38-3642-4655-9C63-2FB6158BBF75}
+		{1EFFBDB5-EA7E-4BAC-8A6F-25625E68EA33} = {B0B72D38-3642-4655-9C63-2FB6158BBF75}
+		{583E8A66-6925-4FCC-B56A-8235EC07F575} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{8C6FE6A6-08E5-4B09-8EF3-0B44636C722F} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{C079CA75-865E-4DE4-A40D-6243DFEC2560} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{AB256CFB-96E8-4744-9026-BEE4D8F50811} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{7EF4BB2F-2332-4B77-B5AB-0EE705CB099A} = {EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}
+		{C7BBC48B-E520-4924-8A13-AD037605A0E6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70B28ED5-FA8F-43DF-AB07-E0FD23F547EC}
+	EndGlobalSection
+EndGlobal

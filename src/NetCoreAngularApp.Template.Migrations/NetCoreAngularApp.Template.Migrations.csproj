@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <NoWarn>IDE0161;IDE0053;S1186</NoWarn>
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreAngularApp.Template.Persistence\NetCoreAngularApp.Template.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

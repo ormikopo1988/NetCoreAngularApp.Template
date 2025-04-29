@@ -1,0 +1,137 @@
+name: Provision infra and deploy app
+
+on:
+  workflow_dispatch:
+  push:
+    # Run when commits are pushed to mainline branch (main)
+    # Set this to the mainline branch you are using
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.dockerignore'
+      - '.gitignore' 
+
+# GitHub Actions workflow to deploy to Azure using azd
+# To configure required secrets for connecting to Azure, simply run `azd pipeline config`
+
+# Set up permissions for deploying with secretless Azure federated credentials
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    with:
+      build-artifacts: true
+  validate:
+     runs-on: ubuntu-latest
+     needs: [ build ]
+     environment: ${{ vars.AZURE_ENV_NAME }}
+     steps: 
+       - uses: actions/checkout@v4
+         name: Checkout code
+
+       - uses: azure/login@v1
+         name: Login to Azure
+         with:
+           client-id: ${{ vars.AZURE_CLIENT_ID }}
+           tenant-id: ${{ vars.AZURE_TENANT_ID }}
+           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+       - if: vars.AZURE_ENV_NAME == 'production'
+         uses: azure/arm-deploy@v2
+         name: Run preflight validation
+         with:
+           deploymentName: ${{ github.run_number }}
+           template: ./infra/main.bicep
+           parameters: >
+             environmentName=${{ vars.AZURE_ENV_NAME }}
+             location=${{ vars.AZURE_LOCATION }}
+             principalId=${{ secrets.AZURE_PRINCIPAL_ID }}
+             dbAdminPassword=${{ secrets.AZURE_SQL_ADMINISTRATOR_PASSWORD }}
+             dbAppUserPassword=${{ secrets.AZURE_SQL_USER_PASSWORD }}
+           scope: subscription
+           region: ${{ vars.AZURE_LOCATION }}
+           deploymentMode: Validate
+
+       - if: vars.AZURE_ENV_NAME != 'production'
+         uses: azure/arm-deploy@v2
+         name: Run what-if
+         with:
+           failOnStdErr: false
+           template: ./infra/main.bicep
+           parameters: >
+             environmentName=${{ vars.AZURE_ENV_NAME }}
+             location=${{ vars.AZURE_LOCATION }}
+             principalId=${{ secrets.AZURE_PRINCIPAL_ID }}
+             dbAdminPassword=${{ secrets.AZURE_SQL_ADMINISTRATOR_PASSWORD }}
+             dbAppUserPassword=${{ secrets.AZURE_SQL_USER_PASSWORD }}
+           scope: subscription
+           region: ${{ vars.AZURE_LOCATION }}
+           additionalArguments: --what-if
+  deploy:
+    needs: [ validate ]
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        name: Download artifacts
+
+      - name: Install azd
+        uses: Azure/setup-azd@v2.0.0
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: 'global.json'
+          
+      - name: Log in with Azure (Federated Credentials)
+        if: ${{ env.AZURE_CLIENT_ID != '' }}
+        run: |
+          azd auth login `
+            --client-id "$Env:AZURE_CLIENT_ID" `
+            --federated-credential-provider "github" `
+            --tenant-id "$Env:AZURE_TENANT_ID"
+        shell: pwsh
+
+      - name: Log in with Azure (Client Credentials)
+        if: ${{ env.AZURE_CREDENTIALS != '' }}
+        run: |
+          $info = $Env:AZURE_CREDENTIALS | ConvertFrom-Json -AsHashtable;
+          Write-Host "::add-mask::$($info.clientSecret)"
+
+          azd auth login `
+            --client-id "$($info.clientId)" `
+            --client-secret "$($info.clientSecret)" `
+            --tenant-id "$($info.tenantId)"
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Provision Infrastructure
+        run: azd provision --no-prompt --no-state
+        env:
+          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+
+      - name: Run EF migrations
+        run: |
+          unzip -o ./efbundle/efbundle.zip
+          echo '{ "ConnectionStrings": { "DefaultConnection": "${{ secrets.DB_CONNECTION_STRING }}" } }' > appsettings.json
+          ./efbundle.exe --connection "${{ secrets.DB_CONNECTION_STRING }}" --verbose
+
+      - name: Deploy Application
+        run: azd deploy --no-prompt

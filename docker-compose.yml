@@ -1,0 +1,103 @@
+services:
+  netcoreangularapp.template.api:
+    image: netcoreangularapptemplateapi:1.0.0
+    hostname: netcoreangularapp.template.api
+    container_name: netcoreangularapptemplateapi
+    depends_on:
+      postgres:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: src/NetCoreAngularApp.Template.Api/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Test1234!
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=NetCoreAngularAppTemplateDb;Username=postgres;Password=postgres;Include Error Detail=true
+    ports:
+      - "5001:443"
+      - "5000:80"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+
+  postgres:
+    image: postgres:17
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    hostname: postgres
+    container_name: netcoreangularapptemplatedb
+    environment:
+      - POSTGRES_DB=NetCoreAngularAppTemplateDb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql
+      - ./.containers/db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  
+  sonarqube.platform:
+    image: sonarqube:community
+    hostname: sonarqube.platform
+    container_name: sonarqubeplatform
+    read_only: true
+    depends_on:
+      sonarqube.db:
+        condition: service_healthy
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube.db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
+    ports:
+      - "9000:9000"
+    networks:
+      - ${NETWORK_TYPE:-ipv4}
+
+  sonarqube.db:
+    image: postgres:17
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    hostname: sonarqube.db
+    container_name: sonarqubedb
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - ${NETWORK_TYPE:-ipv4}
+
+volumes:
+  sonarqube_data:
+  sonarqube_temp:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql:
+  postgresql_data:
+
+networks:
+  ipv4:
+    driver: bridge
+    enable_ipv6: false
+  dual:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: "192.168.2.0/24"
+          gateway: "192.168.2.1"
+        - subnet: "2001:db8:2::/64"
+          gateway: "2001:db8:2::1"

@@ -1,0 +1,181 @@
+name: Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.dockerignore'
+      - '.gitignore'
+  workflow_call:
+    inputs:
+      build-artifacts:
+        type: boolean
+        required: true
+        default: false
+    secrets:
+      SONAR_TOKEN:
+        required: true
+        description: "SonarCloud token"
+      SNYK_TOKEN:
+        required: true
+        description: "Snyk token"
+
+env:
+  DOTNET_VERSION: "9.x"
+
+jobs:
+  build:
+    name: Build code, run tests and analyze codebase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'zulu'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Cache SonarQube Cloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache SonarQube Cloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v4
+        with:
+          path: ./.sonar/scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+
+      - name: Install SonarQube Cloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ./.sonar/scanner
+          dotnet tool install dotnet-sonarscanner --tool-path ./.sonar/scanner
+          dotnet tool install dotnet-coverage --tool-path ./.sonar/scanner
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Install Node & cache npm packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: src/NetCoreAngularApp.Template.Client/package-lock.json
+
+      - name: Build, test, and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          ./.sonar/scanner/dotnet-sonarscanner begin \
+            /k:"ormikopo1988_NetCoreAngularApp.Template" \
+            /o:"ormikopo1988" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
+            /d:sonar.exclusions=infra/core/**
+
+          dotnet restore ./NetCoreAngularApp.Template.sln
+
+          dotnet build ./NetCoreAngularApp.Template.sln --configuration Release --no-restore
+
+          ./.sonar/scanner/dotnet-coverage collect \
+            "dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build /p:CollectCoverage=true /p:Threshold=56 /p:ThresholdType=line /p:ThresholdStat=total" \
+            -f xml -o "coverage.xml"
+
+          ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/dotnet@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=high
+
+      - name: Create wwwroot directory
+        run: mkdir -p src/NetCoreAngularApp.Template.Api/wwwroot
+
+      - name: Build frontend
+        run: |
+          cd src/NetCoreAngularApp.Template.Client
+          npm run build
+
+      - name: Publish website
+        if: ${{ inputs.build-artifacts == true }}
+        run: |
+          dotnet publish \
+            --configuration Release \
+            --runtime win-x86 \
+            --self-contained \
+            --output ./publish
+          cd publish
+          zip -r ./publish.zip .
+        working-directory: ./src/NetCoreAngularApp.Template.Api/
+
+      - name: Upload website artifact
+        if: ${{ inputs.build-artifacts == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: ./src/NetCoreAngularApp.Template.Api/publish/publish.zip
+          if-no-files-found: error
+
+      - name: Create EF Core migrations bundle - Install tool-manifest
+        if: ${{ inputs.build-artifacts == true }}
+        run: dotnet new tool-manifest
+        env:
+          SkipNSwag: True
+
+      - name: Create EF Core migrations bundle - Install dotnet-ef
+        if: ${{ inputs.build-artifacts == true }}
+        run: dotnet tool install dotnet-ef --version 9.0.2
+        env:
+          SkipNSwag: True
+
+      - name: Create EF Core migrations bundle - Bundle migrations
+        if: ${{ inputs.build-artifacts == true }}
+        run: |
+          dotnet ef migrations bundle \
+            --configuration Release \
+            -p ./src/NetCoreAngularApp.Template.Migrations/ \
+            -s ./src/NetCoreAngularApp.Template.Api/ \
+            -o efbundle.exe
+        env:
+          SkipNSwag: True
+
+      - name: Create EF Core migrations bundle - Zip migrations bundle
+        if: ${{ inputs.build-artifacts == true }}
+        run: zip -r ./efbundle.zip efbundle.exe
+        env:
+          SkipNSwag: True
+
+      - name: Upload EF Core migrations bundle artifact
+        if: ${{ inputs.build-artifacts == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: efbundle
+          path: ./efbundle.zip
+          if-no-files-found: error

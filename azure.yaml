@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+# Name of the application.
+name: net-core-angular-app-azd
+services:
+  api:
+    language: csharp
+    project: ./src/NetCoreAngularApp.Template.Api
+    host: appservice
