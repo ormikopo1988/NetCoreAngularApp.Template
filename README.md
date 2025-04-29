@@ -256,3 +256,13 @@ azd pipeline config
 ```
 
 > By default, azd pipeline config uses OpenID Connect (OIDC), called federated credentials. If you'd rather not use OIDC, run `azd pipeline config --auth-type client-credentials`.
+
+Supply the requested GitHub information.
+
+When prompted about committing and pushing your local changes to start a new GitHub Actions run, specify `Y`.
+
+In the terminal window, view the results of the `azd pipeline config` command. 
+
+Using your browser, open the GitHub repository for your project.
+
+Select Actions to see the workflow running.
