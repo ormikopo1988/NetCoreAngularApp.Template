@@ -31,9 +31,12 @@ jobs:
   build:
     name: Build code, run tests and analyze codebase
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Set up JDK 17
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: actions/setup-java@v4
         with:
           java-version: 17
@@ -50,6 +53,9 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Cache SonarQube Cloud packages
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
@@ -57,6 +63,9 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache SonarQube Cloud scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         id: cache-sonar-scanner
         uses: actions/cache@v4
         with:
@@ -65,7 +74,9 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar-scanner
 
       - name: Install SonarQube Cloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true' && env.SONAR_TOKEN != ''
         run: |
           mkdir -p ./.sonar/scanner
           dotnet tool install dotnet-sonarscanner --tool-path ./.sonar/scanner
@@ -90,6 +101,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
         run: |
           ./.sonar/scanner/dotnet-sonarscanner begin \
             /k:"ormikopo1988_NetCoreAngularApp.Template" \
@@ -109,10 +121,29 @@ jobs:
 
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
+      - name: Restore solution
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: dotnet restore ./NetCoreAngularApp.Template.sln
+
+      - name: Build solution
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: dotnet build ./NetCoreAngularApp.Template.sln --configuration Release --no-restore
+      
+      - name: Test solution
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build /p:CollectCoverage=true /p:Threshold=56 /p:ThresholdType=line /p:ThresholdStat=total" -f xml -o "coverage.xml
+
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/dotnet@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        if: ${{ env.SNYK_TOKEN != '' }}
+        uses: snyk/actions/dotnet@master
         with:
           args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=high
 
