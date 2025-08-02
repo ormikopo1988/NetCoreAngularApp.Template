@@ -19,17 +19,15 @@ public class NetCoreAngularAppTemplateFixture : IAsyncLifetime
     {
         await _dbContainer.StartAsync();
 
-        using var host = ConfigureAppBuilder();
+        _host = ConfigureAppBuilder();
 
-        using var scope = host.Services.CreateScope();
+        using var scope = _host.Services.CreateScope();
 
         var initialiser = scope.ServiceProvider
             .GetRequiredService<ApplicationDbContextInitialiser>();
 
         await initialiser.InitialiseAsync();
         await initialiser.TrySeedAsync();
-
-        _host = ConfigureAppBuilder();
     }
 
     public IServiceScope CreateScope()
