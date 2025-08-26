@@ -8,6 +8,14 @@ interface WeatherForecast {
   summary: string;
 }
 
+interface PaginatedList<T> {
+  items: T[];
+  total: number;
+  pageSize: number;
+  page: number;
+  hasNextPage: boolean;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,9 +31,9 @@ export class AppComponent implements OnInit {
   }
 
   getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+    this.http.get<PaginatedList<WeatherForecast>>('/api/weather-forecasts').subscribe(
       (result) => {
-        this.forecasts = result;
+        this.forecasts = result.items;
       },
       (error) => {
         console.error(error);

@@ -27,7 +27,6 @@ public class NetCoreAngularAppTemplateFixture : IAsyncLifetime
             .GetRequiredService<ApplicationDbContextInitialiser>();
 
         await initialiser.InitialiseAsync();
-        await initialiser.TrySeedAsync();
     }
 
     public IServiceScope CreateScope()
