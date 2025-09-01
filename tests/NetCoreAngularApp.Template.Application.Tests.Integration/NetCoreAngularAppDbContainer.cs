@@ -26,7 +26,7 @@ internal sealed class NetCoreAngularAppDbContainer
             .WithEnvironment("POSTGRES_USER", Username)
             .WithEnvironment("POSTGRES_PASSWORD", Password)
             .WithWaitStrategy(Wait.ForUnixContainer()
-                .UntilPortIsAvailable(PgSqlPort)
+                .UntilInternalTcpPortIsAvailable(PgSqlPort)
                 .UntilMessageIsLogged(
                 "database system is ready to accept connections",
                 waitStrategy => waitStrategy.WithTimeout(TimeSpan.FromMinutes(5))))

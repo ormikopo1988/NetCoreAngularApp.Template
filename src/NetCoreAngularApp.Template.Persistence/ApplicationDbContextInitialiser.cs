@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using NetCoreAngularApp.Template.Domain.Entities;
 
 namespace NetCoreAngularApp.Template.Persistence;
 
+[ExcludeFromCodeCoverage]
 internal static class InitialiserExtensions
 {
     public static async Task InitialiseDatabaseAsync(this WebApplication app)
@@ -23,6 +25,7 @@ internal static class InitialiserExtensions
     }
 }
 
+[ExcludeFromCodeCoverage]
 internal class ApplicationDbContextInitialiser
 {
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;

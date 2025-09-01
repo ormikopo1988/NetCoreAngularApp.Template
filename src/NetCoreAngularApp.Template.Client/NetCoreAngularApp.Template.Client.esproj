@@ -6,5 +6,6 @@
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\..\NetCoreAngularApp.Template.Api\wwwroot\</BuildOutputFolder>
+    <SonarQubeExclude>true</SonarQubeExclude>
   </PropertyGroup>
 </Project>
