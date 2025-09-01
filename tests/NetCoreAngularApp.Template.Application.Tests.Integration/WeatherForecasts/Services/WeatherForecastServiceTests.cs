@@ -10,6 +10,11 @@ namespace NetCoreAngularApp.Template.Application.Tests.Integration.WeatherForeca
 
 public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
 {
+    private static readonly DateOnly today = 
+        DateOnly.FromDateTime(DateTime.UtcNow.AddDays(0));
+    private static readonly DateOnly tomorrow = 
+        DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1));
+
     private readonly IWeatherForecastService _sut;
 
     public WeatherForecastServiceTests(NetCoreAngularAppTemplateFixture fixture)
@@ -22,9 +27,6 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
     public async Task GetAllAsync_ShouldReturnWeatherForecasts_WhenCalled()
     {
         // Arrange
-        var today = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(0));
-        var tomorrow = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1));
-
         DbContext
             .WeatherForecasts
             .Add(new()
@@ -88,9 +90,6 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
         GetAllAsync_ShouldReturnPaginatedWeatherForecasts_WhenItemsAreMoreThanThePaginatedRequestedOnes()
     {
         // Arrange
-        var today = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(0));
-        var tomorrow = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1));
-
         DbContext
             .WeatherForecasts
             .Add(new()
