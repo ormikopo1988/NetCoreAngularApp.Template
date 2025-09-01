@@ -27,14 +27,16 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
 
         DbContext
             .WeatherForecasts
-            .AddRange(
-                new()
+            .Add(new()
                 {
                     Date = today,
                     TemperatureC = 20,
                     Summary = "Warm"
-                },
-                new()
+                });
+
+        DbContext
+            .WeatherForecasts
+            .Add(new()
                 {
                     Date = tomorrow,
                     TemperatureC = 10,
@@ -91,14 +93,16 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
 
         DbContext
             .WeatherForecasts
-            .AddRange(
-                new()
+            .Add(new()
                 {
                     Date = today,
                     TemperatureC = 15,
                     Summary = "Neutral"
-                },
-                new()
+                });
+
+        DbContext
+            .WeatherForecasts
+            .Add(new()
                 {
                     Date = tomorrow,
                     TemperatureC = 0,
@@ -128,11 +132,7 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
         result.Data.Page.Should().Be(1);
         result.Data.PageSize.Should().Be(1);
 
-        var sortedItems = result.Data.Items
-            .OrderByDescending(x => x.Date)
-            .ToList();
-
-        var weatherForecast = sortedItems.SingleOrDefault();
+        var weatherForecast = result.Data.Items.SingleOrDefault();
         weatherForecast.Should().NotBeNull();
         weatherForecast.Date.Should().Be(tomorrow);
         weatherForecast.TemperatureC.Should().Be(0);
