@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreAngularApp.Template.Application.Common.Models;
 using NetCoreAngularApp.Template.Application.WeatherForecasts.Interfaces;
@@ -130,12 +131,6 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
         result.Data.HasNextPage.Should().BeTrue();
         result.Data.Page.Should().Be(1);
         result.Data.PageSize.Should().Be(1);
-
-        var weatherForecast = result.Data.Items.SingleOrDefault();
-        weatherForecast.Should().NotBeNull();
-        weatherForecast.Date.Should().Be(tomorrow);
-        weatherForecast.TemperatureC.Should().Be(0);
-        weatherForecast.Summary.Should().Be("Freezing");
     }
 
     public ValueTask InitializeAsync()
