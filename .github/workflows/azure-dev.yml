@@ -139,8 +139,8 @@ jobs:
         if: ${{ env.DB_CONNECTION_STRING != '' }}
         run: |
           unzip -o ./efbundle/efbundle.zip
-          echo '{ "ConnectionStrings": { "DefaultConnection": "${{ secrets.DB_CONNECTION_STRING }}" } }' > appsettings.json
-          ./efbundle.exe --connection "${{ secrets.DB_CONNECTION_STRING }}" --verbose
+          echo '{ "ConnectionStrings": { "DefaultConnection": "${{ env.DB_CONNECTION_STRING }}" } }' > appsettings.json
+          ./efbundle.exe --connection "${{ env.DB_CONNECTION_STRING }}" --verbose
 
       - name: Deploy Application
         run: azd deploy --no-prompt
