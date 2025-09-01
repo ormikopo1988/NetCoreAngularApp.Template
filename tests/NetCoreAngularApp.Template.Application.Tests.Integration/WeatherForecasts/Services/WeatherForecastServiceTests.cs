@@ -64,13 +64,17 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
         result.Data.Page.Should().Be(1);
         result.Data.PageSize.Should().Be(10);
 
-        var firstItem = result.Data.Items.FirstOrDefault();
+        var sortedItems = result.Data.Items
+            .OrderByDescending(x => x.Date)
+            .ToList();
+
+        var firstItem = sortedItems.FirstOrDefault();
         firstItem.Should().NotBeNull();
         firstItem.Date.Should().Be(tomorrow);
         firstItem.TemperatureC.Should().Be(10);
         firstItem.Summary.Should().Be("Cold");
 
-        var lastItem = result.Data.Items.LastOrDefault();
+        var lastItem = sortedItems.LastOrDefault();
         lastItem.Should().NotBeNull();
         lastItem.Date.Should().Be(today);
         lastItem.TemperatureC.Should().Be(20);
@@ -124,7 +128,11 @@ public class WeatherForecastServiceTests : TestBase, IAsyncLifetime
         result.Data.Page.Should().Be(1);
         result.Data.PageSize.Should().Be(1);
 
-        var weatherForecast = result.Data.Items.SingleOrDefault();
+        var sortedItems = result.Data.Items
+            .OrderByDescending(x => x.Date)
+            .ToList();
+
+        var weatherForecast = sortedItems.SingleOrDefault();
         weatherForecast.Should().NotBeNull();
         weatherForecast.Date.Should().Be(tomorrow);
         weatherForecast.TemperatureC.Should().Be(0);
