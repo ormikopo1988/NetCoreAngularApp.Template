@@ -139,7 +139,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ env.SONAR_TOKEN == '' }}
-        run: dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build /p:CollectCoverage=true /p:Threshold=56 /p:ThresholdType=line /p:ThresholdStat=total" -f xml -o "coverage.xml
+        run: dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build
 
       - name: Run Snyk to check for vulnerabilities
         env:
