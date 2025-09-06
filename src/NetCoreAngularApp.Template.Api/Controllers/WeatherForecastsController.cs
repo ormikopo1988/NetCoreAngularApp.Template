@@ -11,11 +11,11 @@ namespace NetCoreAngularApp.Template.Api.Controllers;
 
 [ApiController]
 [Route("api/weather-forecasts")]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastsController : ControllerBase
 {
     private readonly IWeatherForecastService _weatherForecastService;
 
-    public WeatherForecastController(IWeatherForecastService weatherForecastService)
+    public WeatherForecastsController(IWeatherForecastService weatherForecastService)
     {
         _weatherForecastService = weatherForecastService;
     }
