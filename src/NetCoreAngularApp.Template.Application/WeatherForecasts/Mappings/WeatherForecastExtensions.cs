@@ -9,7 +9,7 @@ namespace NetCoreAngularApp.Template.Application.WeatherForecasts.Mappings;
 public static class WeatherForecastExtensions
 {
     public static List<WeatherForecastDto> ToWeatherForecastDtos(
-        this IEnumerable<WeatherForecast> weatherForecasts, 
+        this IEnumerable<WeatherForecast> weatherForecasts,
         CancellationToken ct = default)
     {
         var dtos = new List<WeatherForecastDto>();

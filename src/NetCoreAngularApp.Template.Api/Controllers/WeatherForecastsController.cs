@@ -21,7 +21,7 @@ public class WeatherForecastsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<WeatherForecastDto>>> 
+    public async Task<ActionResult<PaginatedList<WeatherForecastDto>>>
         GetAll([FromQuery] BasePaginationQuery request, CancellationToken ct)
     {
         return await _weatherForecastService

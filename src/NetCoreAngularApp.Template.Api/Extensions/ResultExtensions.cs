@@ -8,7 +8,7 @@ namespace NetCoreAngularApp.Template.Api.Extensions;
 
 internal static class ResultExtensions
 {
-    public static async Task<ActionResult<T>> 
+    public static async Task<ActionResult<T>>
         AsActionResult<T>(
             this Task<IResult<T>> resultTask)
     {
@@ -37,7 +37,7 @@ internal static class ResultExtensions
         };
     }
 
-    public static async Task<ActionResult> 
+    public static async Task<ActionResult>
         AsActionResult(
             this Task<IResult> resultTask)
     {

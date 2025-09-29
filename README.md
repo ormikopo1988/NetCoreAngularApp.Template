@@ -20,7 +20,7 @@ Finally, it shows you how to automate your builds and deployments with GitHub Ac
 To sum up, on a high-level, this template includes the following:
 
 * Basic .NET API with Angular SPA project setup using Clean Architecture.
-* Integration tests setup
+* Unit & integration tests setup
 * Database migrations & seeding
 * Code style (i.e., `.editorconfig`)
 * Build configuration (i.e., `Directory.Build.props` and `Directory.Build.targets`)
@@ -92,7 +92,7 @@ dotnet ef database drop --project src\\NetCoreAngularApp.Template.Migrations --s
 
 ## Tests
 
-* **Integration Tests**: The template includes integration tests to ensure code quality and functionality. These tests are also integrated as part of the CI pipeline.
+* **Unit & integration Tests**: The template includes unit & integration tests to ensure code quality and functionality. These tests are also integrated as part of the CI pipeline.
 
 ## Running the Solution
 
@@ -101,6 +101,12 @@ dotnet ef database drop --project src\\NetCoreAngularApp.Template.Migrations --s
 * Open the solution in Visual Studio.
 * Set `NetCoreAngularApp.Template.Api` as the startup project.
 * Press F5 to build and run the solution.
+
+Note: If you want to run the API project (without docker compose or Aspire), then you need to have either PostgreSQL pre-installed on your machine, or run it through Docker with:
+
+```
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17
+```
 
 ### Docker Compose
 
@@ -167,7 +173,7 @@ dotnet sonarscanner end /d:sonar.token="{yourSonarToken}"
 The steps in this section demonstrate how to handle 
 provisioning of the necessary infrastructure and deploying of the app to Azure using `azd`:
 
-* You have installed `azd` on your local machine.
+* You have [installed `azd`](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) on your local machine.
 * **Important**: If you are on Windows, and your user has an extra whitespace character, use the following command
 through a PowerShell terminal before continuing. You can find more details in [this GitHub issue](https://github.com/Azure-Samples/azure-search-openai-demo/issues/502):
 

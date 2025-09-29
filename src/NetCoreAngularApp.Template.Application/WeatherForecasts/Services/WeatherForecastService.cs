@@ -62,7 +62,7 @@ public class WeatherForecastService : IWeatherForecastService
 
             return Results.
                 InternalServerError<PaginatedList<WeatherForecastDto>>(
-                    ex, 
+                    ex,
                     LogEventId.WeatherForecastServiceGetAllFailed);
         }
 

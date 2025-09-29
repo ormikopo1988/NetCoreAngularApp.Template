@@ -19,7 +19,7 @@ public static class Results
     }
 
     public static IResult<T> Ok<T>(
-        T value, 
+        T value,
         EventId eventId = default)
     {
         return new Result<T>
@@ -30,121 +30,121 @@ public static class Results
     }
 
     public static IResult<T> Unspecified<T>(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error<T>(
             ErrorCode.Unspecified,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult<T> NotFound<T>(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error<T>(
             ErrorCode.NotFound,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult<T> ValidationFailed<T>(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error<T>(
             ErrorCode.BadRequest,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult<T> InternalServerError<T>(
-        Exception ex, 
+        Exception ex,
         EventId eventId = default)
     {
         return Error<T>(
             ErrorCode.InternalServerError,
-            "Unhandled error", 
-            eventId, 
+            "Unhandled error",
+            eventId,
             ex);
     }
 
     public static IResult<T> InternalServerError<T>(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error<T>(
             ErrorCode.InternalServerError,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult NotFound(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.NotFound,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult ValidationFailed(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.BadRequest,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult InternalServerError(
-        Exception ex, 
+        Exception ex,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.InternalServerError,
-            "Unhandled error", 
-            eventId, 
+            "Unhandled error",
+            eventId,
             ex);
     }
 
     public static IResult InternalServerError(
-        Exception ex, 
+        Exception ex,
         string message,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.InternalServerError,
-            message, 
-            eventId, 
+            message,
+            eventId,
             ex);
     }
 
     public static IResult BadGateway(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.BadGateway,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult Unauthorized(
-        string message, 
+        string message,
         EventId eventId = default)
     {
         return Error(
             ErrorCode.Unauthorized,
-            message, 
+            message,
             eventId);
     }
 
     public static IResult Error(
-        IResult result, 
+        IResult result,
         EventId? eventId = null)
     {
         return new Result<object>
@@ -155,7 +155,7 @@ public static class Results
     }
 
     public static IResult<T> Error<T>(
-        IResult result, 
+        IResult result,
         EventId? eventId = null)
     {
         return new Result<T>
@@ -166,9 +166,9 @@ public static class Results
     }
 
     internal static IResult Error(
-        ErrorCode code, 
+        ErrorCode code,
         string message,
-        EventId eventId, 
+        EventId eventId,
         Exception? ex = null)
     {
         return new Result<object>
@@ -184,9 +184,9 @@ public static class Results
     }
 
     internal static IResult<T> Error<T>(
-        ErrorCode code, 
+        ErrorCode code,
         string message,
-        EventId eventId, 
+        EventId eventId,
         Exception? ex = null)
     {
         return new Result<T>
