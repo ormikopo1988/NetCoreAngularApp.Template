@@ -35,8 +35,7 @@ public static class DependencyInjection
     {
         var keyVaultUri = builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"];
 
-        if (builder.Environment.IsProduction()
-            && !string.IsNullOrWhiteSpace(keyVaultUri))
+        if (!string.IsNullOrWhiteSpace(keyVaultUri))
         {
             builder.Configuration.AddAzureKeyVault(
                 new Uri(keyVaultUri),
