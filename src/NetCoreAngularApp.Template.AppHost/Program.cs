@@ -23,7 +23,9 @@ var netCoreAngularAppTemplateApi = builder
 // Angular: npm run start
 if (builder.ExecutionContext.IsRunMode)
 {
-    builder.AddNpmApp("NetCoreAngularAppTemplateClient", "../NetCoreAngularApp.Template.Client")
+    builder.AddJavaScriptApp(
+        "NetCoreAngularAppTemplateClient", "../NetCoreAngularApp.Template.Client", "start")
+        .WithNpm()
         .WithReference(netCoreAngularAppTemplateApi)
         .WaitFor(netCoreAngularAppTemplateApi)
         .WithHttpEndpoint(env: "PORT");

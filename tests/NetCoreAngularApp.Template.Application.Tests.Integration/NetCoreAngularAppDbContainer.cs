@@ -19,8 +19,7 @@ internal sealed class NetCoreAngularAppDbContainer
 
     public NetCoreAngularAppDbContainer()
     {
-        _pgsqlContainer = new ContainerBuilder()
-            .WithImage("postgres:17")
+        _pgsqlContainer = new ContainerBuilder("postgres:17")
             .WithPortBinding(PgSqlPort, true)
             .WithEnvironment("POSTGRES_DB", Database)
             .WithEnvironment("POSTGRES_USER", Username)
