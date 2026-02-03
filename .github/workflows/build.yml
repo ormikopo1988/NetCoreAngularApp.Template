@@ -79,7 +79,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true' && env.SONAR_TOKEN != ''
         run: |
-          New-Item -Path ${{ runner.temp }}/scanner -ItemType Directory
+          mkdir -p "${{ runner.temp }}/scanner"
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}/scanner
           dotnet tool update dotnet-coverage --tool-path ${{ runner.temp }}/scanner
 
