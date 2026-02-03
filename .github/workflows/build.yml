@@ -147,15 +147,9 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         if: ${{ env.SNYK_TOKEN != '' }}
         uses: snyk/actions/dotnet@master
-        continue-on-error: true # To make sure that SARIF upload gets called
         with:
-          args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=high --sarif-file-output=snyk.sarif
-
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk.sarif
-
+          args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=critical
+          
       - name: Create wwwroot directory
         run: mkdir -p src/NetCoreAngularApp.Template.Api/wwwroot
 
