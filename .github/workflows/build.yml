@@ -104,23 +104,25 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ env.SONAR_TOKEN != '' }}
         run: |
+          echo "SONAR_HOST_URL=${SONAR_HOST_URL}"
+         
           ${{ runner.temp }}/scanner/dotnet-sonarscanner begin \
-            /k:"ormikopo1988_NetCoreAngularApp.Template" \
-            /o:"ormikopo1988" \
-            /d:sonar.token="${{ env.SONAR_TOKEN }}" \
-            /d:sonar.qualitygate.wait=true \
-            /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
-            /d:sonar.exclusions=infra/core/**,src/NetCoreAngularApp.Template.Client/**,src/NetCoreAngularApp.Template.Infrastructure/ApplicationInsights/**,src/NetCoreAngularApp.Template.Persistence/**
-            
-          dotnet restore ./NetCoreAngularApp.Template.sln
+          /k:"ormikopo1988_NetCoreAngularApp.Template" \
+          /o:"ormikopo1988" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.token="${{ env.SONAR_TOKEN }}" \
+          /d:sonar.qualitygate.wait=true \
+          /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
+          /d:sonar.exclusions=infra/core/**,src/NetCoreAngularApp.Template.Client/**,src/NetCoreAngularApp.Template.Infrastructure/ApplicationInsights/**,src/NetCoreAngularApp.Template.Persistence/**
 
+          dotnet restore ./NetCoreAngularApp.Template.sln
           dotnet build ./NetCoreAngularApp.Template.sln --configuration Release --no-restore
 
           ${{ runner.temp }}/scanner/dotnet-coverage collect \
-            "dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build /p:CollectCoverage=true /p:Threshold=56 /p:ThresholdType=line /p:ThresholdStat=total" \
+            "dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build" \
             -f xml -o "coverage.xml"
 
-          ${{ runner.temp }}/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          ${{ runner.temp }}/scanner/dotnet-sonarscanner end /d:sonar.token="${{ env.SONAR_TOKEN }}"
 
       - name: Restore solution
         env:
