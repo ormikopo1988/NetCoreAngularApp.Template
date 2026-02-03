@@ -35,14 +35,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./.containers/db:/var/lib/postgresql
-      - ./.containers/db_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
   
-  sonarqube.platform:
+  sonarqube:
     image: sonarqube:community
-    hostname: sonarqube.platform
-    container_name: sonarqubeplatform
+    hostname: sonarqube
+    container_name: sonarqube
     read_only: true
     depends_on:
       sonarqube.db:
@@ -56,6 +55,8 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_temp:/opt/sonarqube/temp
+    tmpfs:
+      - /tmp:size=256M,mode=1777
     ports:
       - "9000:9000"
     networks:
@@ -64,7 +65,7 @@ services:
   sonarqube.db:
     image: postgres:17
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -76,7 +77,6 @@ services:
       POSTGRES_DB: sonar
     volumes:
       - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
     networks:
       - ${NETWORK_TYPE:-ipv4}
 
@@ -86,7 +86,6 @@ volumes:
   sonarqube_extensions:
   sonarqube_logs:
   postgresql:
-  postgresql_data:
 
 networks:
   ipv4:

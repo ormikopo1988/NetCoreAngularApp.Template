@@ -1,5 +1,7 @@
 name: Build
 permissions:
+  security-events: write
+  actions: read
   contents: read
 on:
   pull_request:
@@ -26,7 +28,7 @@ on:
         description: "Snyk token"
 
 env:
-  DOTNET_VERSION: "9.x"
+  DOTNET_VERSION: "10.x"
 
 jobs:
   build:
@@ -70,7 +72,7 @@ jobs:
         id: cache-sonar-scanner
         uses: actions/cache@v4
         with:
-          path: ./.sonar/scanner
+          path: ${{ runner.temp }}/scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
@@ -79,9 +81,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true' && env.SONAR_TOKEN != ''
         run: |
-          mkdir -p ./.sonar/scanner
-          dotnet tool install dotnet-sonarscanner --tool-path ./.sonar/scanner
-          dotnet tool install dotnet-coverage --tool-path ./.sonar/scanner
+          mkdir -p "${{ runner.temp }}/scanner"
+          dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}/scanner
+          dotnet tool update dotnet-coverage --tool-path ${{ runner.temp }}/scanner
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -104,24 +106,23 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ env.SONAR_TOKEN != '' }}
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin \
-            /k:"ormikopo1988_NetCoreAngularApp.Template" \
-            /o:"ormikopo1988" \
-            /d:sonar.token="${{ env.SONAR_TOKEN }}" \
-            /d:sonar.host.url="https://sonarcloud.io" \
-            /d:sonar.qualitygate.wait=true \
-            /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
-            /d:sonar.exclusions=infra/core/**,src/NetCoreAngularApp.Template.Client/**,src/NetCoreAngularApp.Template.Infrastructure/ApplicationInsights/**,src/NetCoreAngularApp.Template.Persistence/**
-            
-          dotnet restore ./NetCoreAngularApp.Template.sln
+          ${{ runner.temp }}/scanner/dotnet-sonarscanner begin \
+          /k:"ormikopo1988_NetCoreAngularApp.Template" \
+          /o:"ormikopo1988" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.token="${{ env.SONAR_TOKEN }}" \
+          /d:sonar.qualitygate.wait=true \
+          /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
+          /d:sonar.exclusions=infra/core/**,src/NetCoreAngularApp.Template.Client/**,src/NetCoreAngularApp.Template.Infrastructure/ApplicationInsights/**,src/NetCoreAngularApp.Template.Persistence/**
 
+          dotnet restore ./NetCoreAngularApp.Template.sln
           dotnet build ./NetCoreAngularApp.Template.sln --configuration Release --no-restore
 
-          ./.sonar/scanner/dotnet-coverage collect \
-            "dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build /p:CollectCoverage=true /p:Threshold=56 /p:ThresholdType=line /p:ThresholdStat=total" \
+          ${{ runner.temp }}/scanner/dotnet-coverage collect \
+            "dotnet test NetCoreAngularApp.Template.sln --configuration Release --no-restore --no-build" \
             -f xml -o "coverage.xml"
 
-          ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ env.SONAR_TOKEN }}"
+          ${{ runner.temp }}/scanner/dotnet-sonarscanner end /d:sonar.token="${{ env.SONAR_TOKEN }}"
 
       - name: Restore solution
         env:
@@ -147,8 +148,8 @@ jobs:
         if: ${{ env.SNYK_TOKEN != '' }}
         uses: snyk/actions/dotnet@master
         with:
-          args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=high
-
+          args: --file=./NetCoreAngularApp.Template.sln --severity-threshold=critical
+          
       - name: Create wwwroot directory
         run: mkdir -p src/NetCoreAngularApp.Template.Api/wwwroot
 

@@ -39,7 +39,7 @@ To sum up, on a high-level, this template includes the following:
 
 ### Local machine requirements 
 
-- [.NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- [.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
 - [Docker](https://docs.docker.com/desktop/)
 
@@ -116,6 +116,10 @@ docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgre
 ```
 docker-compose up --build
 ```
+
+> For configuring HTTPs, you can refer to this [Microsoft doc](https://learn.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-10.0). For the `$CREDENTIAL_PLACEHOLDER$` based on the current `docker-compose.yml` file, you must use the value `Test1234!` or change it to what you prefer.
+
+* Once the containers are up and running, you can access the app at `https://localhost:5001`.
 
 #### Local SonarQube Server
 
