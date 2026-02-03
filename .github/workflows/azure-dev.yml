@@ -13,9 +13,6 @@ on:
       - LICENSE
       - README.md
 
-# GitHub Actions workflow to deploy to Azure using azd
-# To configure required secrets for connecting to Azure, simply run `azd pipeline config`
-
 jobs:
   build:
     uses: ./.github/workflows/build.yml
@@ -27,7 +24,10 @@ jobs:
   validate:
      needs: [ build ]
      runs-on: ubuntu-latest
+     # Set up permissions for deploying with secretless Azure federated credentials
+     # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
      permissions:
+       id-token: write
        contents: read
      env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
