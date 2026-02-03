@@ -184,7 +184,7 @@ jobs:
 
       - name: Create EF Core migrations bundle - Install dotnet-ef
         if: ${{ inputs.build-artifacts == true }}
-        run: dotnet tool install dotnet-ef --version 9.0.2
+        run: dotnet tool install dotnet-ef --version 10.0.2
         env:
           SkipNSwag: True
 
