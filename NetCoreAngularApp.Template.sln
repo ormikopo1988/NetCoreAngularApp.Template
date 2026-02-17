@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11505.172 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBA8ECB1-3E60-4FD2-A1C3-602A9F9B7471}"
 EndProject
@@ -64,6 +64,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Api.Tests.Unit", "tests\NetCoreAngularApp.Template.Api.Tests.Unit\NetCoreAngularApp.Template.Api.Tests.Unit.csproj", "{1F018C40-4128-4BCE-8399-0E06A1506302}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreAngularApp.Template.Application.Tests.Unit", "tests\NetCoreAngularApp.Template.Application.Tests.Unit\NetCoreAngularApp.Template.Application.Tests.Unit.csproj", "{6FD4BFBB-C71D-481C-A3D7-5F1FE28675F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{57722E1D-4805-415E-8655-E55B26E53471}"
+	ProjectSection(SolutionItems) = preProject
+		docs\architecture.md = docs\architecture.md
+		docs\devops-and-infrastructure.md = docs\devops-and-infrastructure.md
+		docs\domain-and-features.md = docs\domain-and-features.md
+		docs\project-structure.md = docs\project-structure.md
+		docs\tech-stack.md = docs\tech-stack.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
