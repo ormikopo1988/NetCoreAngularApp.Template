@@ -1,0 +1,138 @@
+# Technology Stack
+
+## Backend
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| .NET | 10.0 (SDK 10.0.100) | Runtime and SDK |
+| ASP.NET Core | 10.0 | Web API framework |
+| C# | 13 | Programming language |
+| Entity Framework Core | 10.0.2 | ORM / data access |
+| Npgsql | 10.0.0 | PostgreSQL EF Core provider |
+| EFCore.NamingConventions | 10.0.1 | Snake_case database naming |
+
+## Frontend
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Angular | 17.0.0 | SPA framework |
+| Angular CLI | 17.0.6 | Build tooling |
+| TypeScript | 5.2.2 | Language |
+| RxJS | 7.8.2 | Reactive programming |
+| Zone.js | 0.14.2 | Change detection |
+| Node.js | 22.x | Runtime (build and dev server) |
+
+## Database
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| PostgreSQL | 17 | Primary database |
+| EF Core Migrations | - | Schema versioning |
+
+## Cloud & Azure
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Azure App Service | - | Application hosting |
+| Azure PostgreSQL Flexible Server | - | Managed database |
+| Azure Key Vault | - | Secrets management |
+| Azure Application Insights | - | APM and telemetry |
+| Azure Log Analytics | - | Centralized logging |
+| Azure Bicep | - | Infrastructure as Code |
+| Azure Developer CLI (azd) | - | Deployment orchestration |
+| Azure.Identity | 1.17.1 | Managed identity auth |
+| Azure.Extensions.AspNetCore.Configuration.Secrets | 1.4.0 | Key Vault config provider |
+
+## Observability
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| OpenTelemetry (OTLP) | 1.15.0 | Distributed tracing and metrics |
+| OpenTelemetry ASP.NET Core instrumentation | 1.15.0 | HTTP request tracing |
+| OpenTelemetry HTTP instrumentation | 1.15.0 | Outbound HTTP tracing |
+| OpenTelemetry Runtime instrumentation | 1.15.0 | Runtime metrics |
+| Azure Monitor OpenTelemetry | 1.4.0 | Azure Monitor exporter |
+| Application Insights SDK | 2.23.0 | Telemetry and APM |
+
+## Orchestration
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| .NET Aspire | 13.1.0 | Local dev orchestration |
+| Aspire.Hosting.PostgreSQL | 13.1.0 | DB provisioning |
+| Aspire.Hosting.JavaScript | 13.1.0 | Angular dev server management |
+| Aspire.Hosting.Azure.ApplicationInsights | 13.1.0 | Telemetry provisioning |
+
+## Resilience & Service Discovery
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Microsoft.Extensions.Http.Resilience | 10.2.0 | HTTP resilience policies |
+| Microsoft.Extensions.ServiceDiscovery | 10.2.0 | Service discovery |
+
+## Testing (Backend)
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| xUnit | 3.2.2 | Test framework |
+| xunit.runner.visualstudio | 3.1.5 | Test runner |
+| NSubstitute | 5.3.0 | Mocking |
+| FluentAssertions | 8.8.0 | Assertion library |
+| Microsoft.NET.Test.Sdk | 18.0.1 | Test SDK |
+| coverlet.collector | 6.0.4 | Code coverage |
+| Testcontainers | 4.10.0 | Docker-based integration tests |
+| Microsoft.AspNetCore.Mvc.Testing | 10.0.2 | WebApplicationFactory |
+
+## Testing (Frontend)
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Karma | 6.4.x | Test runner |
+| Jasmine | 5.1.x | Test framework |
+| karma-chrome-launcher | 3.2.x | Browser launcher |
+| karma-coverage | 2.2.x | Coverage reporting |
+
+## Code Quality
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| SonarAnalyzer.CSharp | 10.19.0 | Static analysis (.NET) |
+| SonarCloud | - | Continuous code quality |
+| Snyk | - | Dependency vulnerability scanning |
+| CodeQL | - | Security vulnerability scanning |
+
+## Containerization
+
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| Docker | - | Container runtime |
+| Docker Compose | - | Multi-container orchestration |
+| Multi-stage Dockerfile | - | Optimized image builds |
+
+## CI/CD
+
+| Technology | Purpose |
+|-----------|---------|
+| GitHub Actions | CI/CD pipeline |
+| `build.yml` | Build, test, SonarCloud, Snyk |
+| `azure-dev.yml` | Azure deployment with azd |
+| `codeql.yml` | CodeQL security analysis |
+| `jekyll-gh-pages.yml` | Documentation site |
+
+## Development Tools
+
+| Technology | Purpose |
+|-----------|---------|
+| Dev Containers | Reproducible dev environments |
+| EditorConfig | Consistent code formatting |
+| SonarLint | IDE-level code analysis |
+| VS Code extensions | Azure, Bicep, Docker tooling |
+
+## Package Management
+
+- **NuGet**: Centralized version management via `Directory.Packages.props`
+- **npm**: Angular dependencies via `package.json` / `package-lock.json`
+
+## Authentication
+
+The template includes a minimal identity abstraction (`IUser` / `CurrentUser`) but does not ship with a full authentication implementation (no Identity, JWT, or OAuth configured). This is intentional -- the template provides the extension point for teams to plug in their preferred auth mechanism.
