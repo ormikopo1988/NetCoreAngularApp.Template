@@ -92,9 +92,9 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Install Node & cache npm packages
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: '22.x'
+          node-version: '24.x'
           cache: 'npm'
           cache-dependency-path: src/NetCoreAngularApp.Template.Client/package-lock.json
 
@@ -150,10 +150,7 @@ jobs:
           
       - name: Create wwwroot directory
         run: mkdir -p src/NetCoreAngularApp.Template.Api/wwwroot
-
-      - name: Clean .esproj obj directory
-        run: rm -rf src/NetCoreAngularApp.Template.Client/obj
-
+        
       - name: Build frontend
         run: |
           cd src/NetCoreAngularApp.Template.Client
