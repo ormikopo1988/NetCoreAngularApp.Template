@@ -154,7 +154,7 @@ jobs:
       - name: Build frontend
         run: |
           cd src/NetCoreAngularApp.Template.Client
-          npm ci
+          npm ci --ignore-scripts
           npm run build
 
       - name: Publish website
