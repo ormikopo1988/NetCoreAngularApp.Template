@@ -7,7 +7,7 @@
 | .NET | 10.0 (SDK 10.0.100) | Runtime and SDK |
 | ASP.NET Core | 10.0 | Web API framework |
 | C# | 13 | Programming language |
-| Entity Framework Core | 10.0.2 | ORM / data access |
+| Entity Framework Core | 10.0.3 | ORM / data access |
 | Npgsql | 10.0.0 | PostgreSQL EF Core provider |
 | EFCore.NamingConventions | 10.0.1 | Snake_case database naming |
 
@@ -15,11 +15,11 @@
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| Angular | 17.0.0 | SPA framework |
-| Angular CLI | 17.0.6 | Build tooling |
-| TypeScript | 5.2.2 | Language |
+| Angular | 19.2.18 | SPA framework |
+| Angular CLI | 19.2.20 | Build tooling |
+| TypeScript | 5.7.3 | Language |
 | RxJS | 7.8.2 | Reactive programming |
-| Zone.js | 0.14.2 | Change detection |
+| Zone.js | 0.15.1 | Change detection |
 | Node.js | 22.x | Runtime (build and dev server) |
 
 ## Database
@@ -81,7 +81,7 @@
 | Microsoft.NET.Test.Sdk | 18.0.1 | Test SDK |
 | coverlet.collector | 6.0.4 | Code coverage |
 | Testcontainers | 4.10.0 | Docker-based integration tests |
-| Microsoft.AspNetCore.Mvc.Testing | 10.0.2 | WebApplicationFactory |
+| Microsoft.AspNetCore.Mvc.Testing | 10.0.3 | WebApplicationFactory |
 
 ## Testing (Frontend)
 

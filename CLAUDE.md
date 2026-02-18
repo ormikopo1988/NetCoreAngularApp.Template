@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Full-stack .NET 10 + Angular 17 template following Clean Architecture. PostgreSQL database, .NET Aspire orchestration, Azure deployment.
+Full-stack .NET 10 + Angular 19 template following Clean Architecture. PostgreSQL database, .NET Aspire orchestration, Azure deployment.
 
 ## Quick Reference
 
@@ -174,8 +174,8 @@ All errors follow RFC 7807 ProblemDetails with `traceId` and `eventId` in extens
 
 ## Angular (Client)
 
-- NgModule-based (not standalone components)
-- `HttpClientModule` for API calls
+- NgModule-based (components use `standalone: false`)
+- `provideHttpClient(withInterceptorsFromDi())` for API calls
 - Proxy dev requests to .NET backend via `proxy.conf.js`
 - Build output: `../NetCoreAngularApp.Template.Api/wwwroot`
 - TypeScript interfaces mirror backend DTOs

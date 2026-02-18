@@ -17,9 +17,10 @@ interface PaginatedList<T> {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    standalone: false
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
@@ -31,14 +32,14 @@ export class AppComponent implements OnInit {
   }
 
   getForecasts() {
-    this.http.get<PaginatedList<WeatherForecast>>('/api/weather-forecasts').subscribe(
-      (result) => {
+    this.http.get<PaginatedList<WeatherForecast>>('/api/weather-forecasts').subscribe({
+      next: (result) => {
         this.forecasts = result.items;
       },
-      (error) => {
+      error: (error) => {
         console.error(error);
       }
-    );
+    });
   }
 
   title = 'NetCoreAngularApp.Template.Client';
