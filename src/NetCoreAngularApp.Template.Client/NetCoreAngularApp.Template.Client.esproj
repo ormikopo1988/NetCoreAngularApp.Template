@@ -6,5 +6,11 @@
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\..\NetCoreAngularApp.Template.Api\wwwroot\</BuildOutputFolder>
+    <!-- Move MSBuild intermediate output outside the Angular source directory.
+         dotnet restore/build creates obj/Debug inside the Angular project by default.
+         Angular 19's TypeScript compiler crashes (TS500 ENOENT) when it encounters
+         obj/Debug as a dangling entry during directory traversal. Moving it here
+         keeps the Angular source tree clean regardless of dotnet build ordering. -->
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)\..\..\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
   </PropertyGroup>
 </Project>
