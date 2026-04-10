@@ -150,7 +150,10 @@ jobs:
           
       - name: Create wwwroot directory
         run: mkdir -p src/NetCoreAngularApp.Template.Api/wwwroot
-        
+
+      - name: Clean .esproj obj directory
+        run: rm -rf src/NetCoreAngularApp.Template.Client/obj
+
       - name: Build frontend
         run: |
           cd src/NetCoreAngularApp.Template.Client
