@@ -46,7 +46,7 @@ public class NetCoreAngularAppTemplateFixture : IAsyncLifetime
             });
 
         builder.Services.AddApplication();
-        builder.Services.AddInfrastructure(builder.Configuration, false);
+        builder.Services.AddInfrastructure();
         builder.Services.AddPersistence(builder.Configuration);
 
         builder.Services.RemoveAll<IHostedService>();

@@ -44,9 +44,10 @@ The codebase follows **Clean Architecture** (Onion Architecture) with strict dep
 
 ### Infrastructure (`NetCoreAngularApp.Template.Infrastructure`)
 - `IUser` / `CurrentUser` (identity abstraction)
-- Application Insights telemetry initializer
-- Azure Key Vault configuration
+- `TimeProvider.System` registration
 - Depends on: **Application**
+
+> Telemetry (Application Insights via OpenTelemetry / Azure Monitor) is wired in `ServiceDefaults`, not Infrastructure. Azure Key Vault configuration is wired in the Api project (`AddKeyVaultIfConfigured`).
 
 ### Api (`NetCoreAngularApp.Template.Api`)
 - ASP.NET Core controllers (`WeatherForecastsController`)
@@ -56,7 +57,7 @@ The codebase follows **Clean Architecture** (Onion Architecture) with strict dep
 - Depends on: **Infrastructure, Persistence, Migrations, ServiceDefaults, Client**
 
 ### Client (`NetCoreAngularApp.Template.Client`)
-- Angular 17 SPA
+- Angular 19 SPA
 - Builds to `wwwroot/` inside the Api project
 - Communicates with backend via REST (`/api/*`)
 
@@ -101,7 +102,7 @@ builder.Services
     .AddPresentation(builder.Configuration)
     .AddApplication()
     .AddPersistence(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure();
 ```
 
 ### Entity Configuration (Fluent API)

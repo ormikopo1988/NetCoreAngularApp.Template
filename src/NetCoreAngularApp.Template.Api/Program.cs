@@ -15,7 +15,7 @@ builder.Services
     .AddPresentation(builder.Configuration)
     .AddApplication()
     .AddPersistence(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure();
 
 var app = builder.Build();
 

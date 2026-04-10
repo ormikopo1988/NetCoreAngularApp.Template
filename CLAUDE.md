@@ -7,7 +7,7 @@ Full-stack .NET 10 + Angular 19 template following Clean Architecture. PostgreSQ
 ## Quick Reference
 
 - **Solution**: `NetCoreAngularApp.Template.sln`
-- **SDK**: .NET 10.0.100 (`global.json`), Node 22.x
+- **SDK**: .NET 10.0.100 (`global.json`), Node 24.x
 - **Database**: PostgreSQL 17 (snake_case naming via EFCore.NamingConventions)
 - **Package versions**: Centralized in `Directory.Packages.props`
 - **Build strictness**: Warnings as errors, all analyzers enabled (`Directory.Build.props`)
@@ -117,7 +117,7 @@ builder.Services
     .AddPresentation(builder.Configuration)
     .AddApplication()
     .AddPersistence(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure();
 ```
 
 ### Service Layer
@@ -187,6 +187,17 @@ All errors follow RFC 7807 ProblemDetails with `traceId` and `eventId` in extens
 - **Azure**: Bicep IaC in `infra/` — App Service, PostgreSQL Flexible Server, Key Vault, Application Insights
 - **CI/CD**: GitHub Actions — `build.yml` (CI + SonarCloud + Snyk), `azure-dev.yml` (CD), `codeql.yml` (security)
 - **Health checks**: `/health` (full, includes DB), `/alive` (liveness)
+
+## Version Sync Points
+
+Some versions live in multiple places and must be bumped together. When changing one of these, update **all** the listed locations in the same commit:
+
+| Concern | Locations |
+|---|---|
+| **EF Core runtime ↔ tooling** | `Directory.Packages.props` (`Microsoft.EntityFrameworkCore`, `Microsoft.EntityFrameworkCore.Tools`) **and** `.github/workflows/build.yml` (`dotnet tool install dotnet-ef --version <X.Y.Z>`) |
+| **Node.js** | `.github/workflows/build.yml` (`node-version`), `src/NetCoreAngularApp.Template.Api/Dockerfile` (`setup_<X>.x`), `docs/tech-stack.md` (Frontend table), `docs/devops-and-infrastructure.md` (Dockerfile stage table) |
+| **.NET SDK / target framework** | `global.json`, `Directory.Build.props` (`<TargetFramework>`), `src/NetCoreAngularApp.Template.Api/Dockerfile` (`dotnet/aspnet:<X.Y>`, `dotnet/sdk:<X.Y>`), `.github/workflows/build.yml` (`DOTNET_VERSION`) |
+| **.NET Aspire** | All `Aspire.Hosting.*` entries in `Directory.Packages.props` must be the same version |
 
 ## Documentation Maintenance
 

@@ -58,7 +58,7 @@
 | Stage | Base Image | Purpose |
 |-------|-----------|---------|
 | `base` | `dotnet/aspnet:10.0` | Runtime base |
-| `with-node` | `dotnet/sdk:10.0` | SDK + Node.js 20.x + Angular CLI |
+| `with-node` | `dotnet/sdk:10.0` | SDK + Node.js 24.x + Angular CLI |
 | `build` | `with-node` | Restore, build, Angular compile |
 | `publish` | `build` | `dotnet publish` release output |
 | `final` | `base` | Production image |

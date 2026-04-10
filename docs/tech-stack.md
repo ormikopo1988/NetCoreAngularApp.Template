@@ -7,8 +7,8 @@
 | .NET | 10.0 (SDK 10.0.100) | Runtime and SDK |
 | ASP.NET Core | 10.0 | Web API framework |
 | C# | 13 | Programming language |
-| Entity Framework Core | 10.0.3 | ORM / data access |
-| Npgsql | 10.0.0 | PostgreSQL EF Core provider |
+| Entity Framework Core | 10.0.5 | ORM / data access |
+| Npgsql | 10.0.1 | PostgreSQL EF Core provider |
 | EFCore.NamingConventions | 10.0.1 | Snake_case database naming |
 
 ## Frontend
@@ -20,7 +20,7 @@
 | TypeScript | 5.7.3 | Language |
 | RxJS | 7.8.2 | Reactive programming |
 | Zone.js | 0.15.1 | Change detection |
-| Node.js | 22.x | Runtime (build and dev server) |
+| Node.js | 24.x | Runtime (build and dev server) |
 
 ## Database
 
@@ -40,35 +40,34 @@
 | Azure Log Analytics | - | Centralized logging |
 | Azure Bicep | - | Infrastructure as Code |
 | Azure Developer CLI (azd) | - | Deployment orchestration |
-| Azure.Identity | 1.17.1 | Managed identity auth |
-| Azure.Extensions.AspNetCore.Configuration.Secrets | 1.4.0 | Key Vault config provider |
+| Azure.Identity | 1.20.0 | Managed identity auth |
+| Azure.Extensions.AspNetCore.Configuration.Secrets | 1.5.0 | Key Vault config provider |
 
 ## Observability
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| OpenTelemetry (OTLP) | 1.15.0 | Distributed tracing and metrics |
-| OpenTelemetry ASP.NET Core instrumentation | 1.15.0 | HTTP request tracing |
+| OpenTelemetry (OTLP) | 1.15.2 | Distributed tracing and metrics |
+| OpenTelemetry ASP.NET Core instrumentation | 1.15.1 | HTTP request tracing |
 | OpenTelemetry HTTP instrumentation | 1.15.0 | Outbound HTTP tracing |
 | OpenTelemetry Runtime instrumentation | 1.15.0 | Runtime metrics |
-| Azure Monitor OpenTelemetry | 1.4.0 | Azure Monitor exporter |
-| Application Insights SDK | 2.23.0 | Telemetry and APM |
+| Azure Monitor OpenTelemetry | 1.4.0 | Azure Monitor exporter (Application Insights) |
 
 ## Orchestration
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| .NET Aspire | 13.1.0 | Local dev orchestration |
-| Aspire.Hosting.PostgreSQL | 13.1.0 | DB provisioning |
-| Aspire.Hosting.JavaScript | 13.1.0 | Angular dev server management |
-| Aspire.Hosting.Azure.ApplicationInsights | 13.1.0 | Telemetry provisioning |
+| .NET Aspire | 13.2.2 | Local dev orchestration |
+| Aspire.Hosting.PostgreSQL | 13.2.2 | DB provisioning |
+| Aspire.Hosting.JavaScript | 13.2.2 | Angular dev server management |
+| Aspire.Hosting.Azure.ApplicationInsights | 13.2.2 | Telemetry provisioning |
 
 ## Resilience & Service Discovery
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| Microsoft.Extensions.Http.Resilience | 10.2.0 | HTTP resilience policies |
-| Microsoft.Extensions.ServiceDiscovery | 10.2.0 | Service discovery |
+| Microsoft.Extensions.Http.Resilience | 10.4.0 | HTTP resilience policies |
+| Microsoft.Extensions.ServiceDiscovery | 10.4.0 | Service discovery |
 
 ## Testing (Backend)
 
@@ -77,11 +76,11 @@
 | xUnit | 3.2.2 | Test framework |
 | xunit.runner.visualstudio | 3.1.5 | Test runner |
 | NSubstitute | 5.3.0 | Mocking |
-| FluentAssertions | 8.8.0 | Assertion library |
-| Microsoft.NET.Test.Sdk | 18.0.1 | Test SDK |
-| coverlet.collector | 6.0.4 | Code coverage |
-| Testcontainers | 4.10.0 | Docker-based integration tests |
-| Microsoft.AspNetCore.Mvc.Testing | 10.0.3 | WebApplicationFactory |
+| FluentAssertions | 8.9.0 | Assertion library |
+| Microsoft.NET.Test.Sdk | 18.4.0 | Test SDK |
+| coverlet.collector | 8.0.1 | Code coverage |
+| Testcontainers | 4.11.0 | Docker-based integration tests |
+| Microsoft.AspNetCore.Mvc.Testing | 10.0.5 | WebApplicationFactory |
 
 ## Testing (Frontend)
 
@@ -96,7 +95,7 @@
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| SonarAnalyzer.CSharp | 10.19.0 | Static analysis (.NET) |
+| SonarAnalyzer.CSharp | 10.23.0 | Static analysis (.NET) |
 | SonarCloud | - | Continuous code quality |
 | Snyk | - | Dependency vulnerability scanning |
 | CodeQL | - | Security vulnerability scanning |
