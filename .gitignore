@@ -400,3 +400,6 @@ FodyWeavers.xsd
 .containers/
 
 /.sonarqube
+
+# Claude Code local settings
+.claude/settings.local.json

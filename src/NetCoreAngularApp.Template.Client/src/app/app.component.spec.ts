@@ -1,6 +1,7 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -10,7 +11,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [HttpClientTestingModule]
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     }).compileComponents();
   });
 
@@ -38,7 +39,7 @@ describe('AppComponent', () => {
 
     const req = httpMock.expectOne('/api/weather-forecasts');
     expect(req.request.method).toEqual('GET');
-    req.flush(mockForecasts);
+    req.flush({ items: mockForecasts, total: 2, pageSize: 10, page: 1, hasNextPage: false });
 
     expect(component.forecasts).toEqual(mockForecasts);
   });

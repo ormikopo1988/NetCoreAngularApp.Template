@@ -14,11 +14,11 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "ES2022",
+    "moduleResolution": "bundler",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "importHelpers": true,
+    "target": "ES2022",
     "lib": [
       "ES2022",
       "dom"
@@ -29,5 +29,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "exclude": [ "node_modules", "obj", "bin" ]
 }

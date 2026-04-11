@@ -82,13 +82,13 @@ dotnet ef database drop --project src\\NetCoreAngularApp.Template.Migrations --s
 ## Code
 
 * **Solution Structure**: The solution follows the Clean Architecture structure and is organized into multiple projects, including:
-    * `NetCoreAngularApp.Template.Api`: The main .NET 9 API project.
+    * `NetCoreAngularApp.Template.Api`: The main .NET 10 API project.
     * `NetCoreAngularApp.Template.Client`: The client project (Angular SPA).
-    * `NetCoreAngularApp.Template.Domain`: A .NET 9 library project that contains the domain entities of the system.
-    * `NetCoreAngularApp.Template.Application`: A .NET 9 library project that contains all application logic.
-    * `NetCoreAngularApp.Template.Infrastructure`: A .NET 9 library project that contains classes for accessing external resources, such as file systems, web services, identity, and so on. These classes should be based on interfaces defined within the application layer.
-    * `NetCoreAngularApp.Template.Persistence`: A .NET 9 library project that contains the EF Core entity configurations and data access specific code. It also contains the logic for the app database seeding.
-    * `NetCoreAngularApp.Template.Migrations`: A .NET 9 library project that contains the Entity Framework migrations.
+    * `NetCoreAngularApp.Template.Domain`: A .NET 10 library project that contains the domain entities of the system.
+    * `NetCoreAngularApp.Template.Application`: A .NET 10 library project that contains all application logic.
+    * `NetCoreAngularApp.Template.Infrastructure`: A .NET 10 library project that contains classes for accessing external resources, such as file systems, web services, identity, and so on. These classes should be based on interfaces defined within the application layer.
+    * `NetCoreAngularApp.Template.Persistence`: A .NET 10 library project that contains the EF Core entity configurations and data access specific code. It also contains the logic for the app database seeding.
+    * `NetCoreAngularApp.Template.Migrations`: A .NET 10 library project that contains the Entity Framework migrations.
 
 ## Tests
 

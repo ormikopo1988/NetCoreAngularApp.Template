@@ -1,12 +1,14 @@
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace Microsoft.Extensions.Hosting;
@@ -50,7 +52,16 @@ public static class Extensions
             logging.IncludeScopes = true;
         });
 
+        var cloudRoleName = builder.Configuration["ApplicationInsights:CloudRoleName"];
+
         builder.Services.AddOpenTelemetry()
+            .ConfigureResource(resource =>
+            {
+                if (!string.IsNullOrEmpty(cloudRoleName))
+                {
+                    resource.AddService(serviceName: cloudRoleName);
+                }
+            })
             .WithMetrics(metrics =>
                 metrics.AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
@@ -76,11 +87,19 @@ public static class Extensions
             builder.Services.AddOpenTelemetry().UseOtlpExporter();
         }
 
-        // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
-        if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+        // Aspire injects APPLICATIONINSIGHTS_CONNECTION_STRING as an env var; the
+        // nested ApplicationInsights:ConnectionString key is used by docker-compose
+        // and direct `dotnet run` via appsettings.json.
+        var applicationInsightsConnectionString =
+            builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+            ?? builder.Configuration["ApplicationInsights:ConnectionString"];
+
+        var disableTelemetry = builder.Configuration.GetValue<bool>("ApplicationInsights:DisableTelemetry");
+
+        if (!string.IsNullOrEmpty(applicationInsightsConnectionString) && !disableTelemetry)
         {
             builder.Services.AddOpenTelemetry()
-               .UseAzureMonitor();
+               .UseAzureMonitor(options => options.ConnectionString = applicationInsightsConnectionString);
         }
 
         return builder;

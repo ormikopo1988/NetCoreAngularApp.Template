@@ -10,5 +10,10 @@
   ],
   "include": [
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "obj",
+    "bin"
   ]
 }
