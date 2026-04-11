@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## Project Overview
 
 Full-stack .NET 10 + Angular 19 template following Clean Architecture. PostgreSQL database, .NET Aspire orchestration, Azure deployment.
@@ -41,6 +43,19 @@ dotnet test tests/NetCoreAngularApp.Template.Application.Tests.Unit
 
 # Run integration tests (requires Docker for Testcontainers)
 dotnet test tests/NetCoreAngularApp.Template.Application.Tests.Integration
+
+# Run a single test by name
+dotnet test tests/NetCoreAngularApp.Template.Api.Tests.Unit --filter "FullyQualifiedName~GetAll_ShouldReturnForecasts_WhenCalled"
+
+# Run the app locally — Aspire (recommended; orchestrates API + Client + PostgreSQL + AppInsights)
+dotnet run --project src/NetCoreAngularApp.Template.AppHost
+
+# Run the app locally — Docker Compose (API + PostgreSQL + SonarQube)
+docker compose up --build
+
+# Run the API standalone (needs a local PostgreSQL — quick spin-up below)
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17
+dotnet run --project src/NetCoreAngularApp.Template.Api
 
 # Angular
 cd src/NetCoreAngularApp.Template.Client
