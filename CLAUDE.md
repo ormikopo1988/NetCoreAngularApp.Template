@@ -179,6 +179,7 @@ All errors follow RFC 7807 ProblemDetails with `traceId` and `eventId` in extens
 - Proxy dev requests to .NET backend via `proxy.conf.js`
 - Build output: `../NetCoreAngularApp.Template.Api/wwwroot`
 - TypeScript interfaces mirror backend DTOs
+- MSBuild intermediate output is redirected to `{repo_root}/obj/NetCoreAngularApp.Template.Client/` via `BaseIntermediateOutputPath` in the `.esproj` file. This prevents Angular 19's TypeScript compiler from encountering MSBuild artifacts (`obj/Debug`) during directory traversal, which would crash with a fatal `TS500 ENOENT` error. Do not remove this setting.
 
 ## Infrastructure
 

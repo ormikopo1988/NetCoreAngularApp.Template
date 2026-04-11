@@ -17,9 +17,12 @@
 7. Run xUnit tests with coverage collection
 8. Complete SonarCloud analysis
 9. Run Snyk vulnerability scan
-10. Optionally publish build artifacts:
+10. Build Angular frontend (`npm run build`)
+11. Optionally publish build artifacts:
     - Website zip (published .NET app)
     - EF Core migrations bundle
+
+> **Note — Angular build and MSBuild artifacts**: `dotnet build` processes the `.esproj` project and writes MSBuild intermediate files to `obj/` by default. Angular 19's TypeScript compiler crashes with a fatal `TS500 ENOENT` if it encounters those files during directory traversal. To prevent this, `BaseIntermediateOutputPath` is set in `NetCoreAngularApp.Template.Client.esproj` to redirect MSBuild output to `{repo_root}/obj/NetCoreAngularApp.Template.Client/`, keeping the Angular source tree clean regardless of dotnet build ordering.
 
 ### azure-dev.yml -- Continuous Deployment
 
